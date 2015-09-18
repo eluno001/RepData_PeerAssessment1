@@ -218,3 +218,55 @@ head(data2)
 ## 5  0.0754717 2012-10-01       20              20 weekday
 ## 6  2.0943396 2012-10-01       25              25 weekday
 ```
+###Make a panel plot containing a time series plot of the 5-minute interval and the average number of steps taken, averaged across all weekday days or weekend days
+
+```r
+summary_weekday_weekend <- data2 %>%
+        group_by(weekday,interval_in_day) %>%
+        summarize(mean=round(mean(steps),0))
+head(summary_weekday_weekend)
+```
+
+```
+## Source: local data frame [6 x 3]
+## Groups: weekday [1]
+## 
+##   weekday interval_in_day  mean
+##     (chr)           (dbl) (dbl)
+## 1 weekday               0     9
+## 2 weekday               5    13
+## 3 weekday              10    22
+## 4 weekday              15    22
+## 5 weekday              20     0
+## 6 weekday              25     2
+```
+
+```r
+par(mfrow=c(2,1))
+weekday<-filter(summary_weekday_weekend,weekday=="weekday")
+weekend<-filter(summary_weekday_weekend,weekday=="weekend")
+plot(weekday$interval_in_day,weekday$mean,type="l")
+plot(weekend$interval_in_day,weekend$mean,type="l")
+```
+
+```
+## Warning in min(x): no non-missing arguments to min; returning Inf
+```
+
+```
+## Warning in max(x): no non-missing arguments to max; returning -Inf
+```
+
+```
+## Warning in min(x): no non-missing arguments to min; returning Inf
+```
+
+```
+## Warning in max(x): no non-missing arguments to max; returning -Inf
+```
+
+```
+## Error in plot.window(...): 'xlim' nécessite des valeurs finies
+```
+
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png) 

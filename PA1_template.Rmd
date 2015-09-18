@@ -99,3 +99,14 @@ data2[!(data2$weekday=="saturday"|data2$weekday=="sunday"),5]<-"weekday"
 head(data2)
 
 ```
+###Make a panel plot containing a time series plot of the 5-minute interval and the average number of steps taken, averaged across all weekday days or weekend days
+```{r}
+summary_weekday_weekend <- data2 %>%
+        group_by(weekday,interval_in_day) %>%
+        summarize(mean=round(mean(steps),0))
+head(summary_weekday_weekend)
+par(mfrow=c(2,1))
+weekday<-filter(summary_weekday_weekend,weekday=="weekday")
+weekend<-filter(summary_weekday_weekend,weekday=="weekend")
+plot(weekday$interval_in_day,weekday$mean,type="l")
+plot(weekend$interval_in_day,weekend$mean,type="l")
